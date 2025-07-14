@@ -1,0 +1,77 @@
+
+
+Table NhanVien {
+  Id INT [pk, increment]
+  MaNV NVARCHAR(20) [not null]
+  TenNV NVARCHAR(100) [not null]
+  DienThoai NVARCHAR(20)
+  Email NVARCHAR(100)
+  TaiKhoan NVARCHAR(50) [not null]
+  MatKhau NVARCHAR(100) [not null]
+  VaiTro NVARCHAR(20) [not null]
+}
+
+Table KhachHang {
+  Id INT [pk, increment]
+  KhachHangId INT
+  MaKH NVARCHAR(MAX)
+  TenKhachHang NVARCHAR(MAX)
+  DiaChi NVARCHAR(MAX)
+  SoDienThoai NVARCHAR(MAX)
+  CCCD NVARCHAR(MAX)
+  Email NVARCHAR(MAX)
+  MaSoThue NVARCHAR(MAX)
+  GhiChu NVARCHAR(MAX)
+}
+
+Table HoaDon {
+  Id INT [pk, increment]
+  KhachHangId INT [not null]
+  NhanVienId INT [not null]
+  NgayLap DATETIME [not null]
+  SoTien DECIMAL(18,2) [not null]
+}
+
+Table BangGia {
+  Id INT [pk, increment]
+  MaBac NVARCHAR(MAX)
+  TenBac NVARCHAR(MAX)
+  MaGia INT
+  MoTa NVARCHAR(MAX)
+  MucDien NVARCHAR(MAX) [not null]
+  DonGia DECIMAL(18,2) [not null]
+}
+
+Table TramDien {
+  Id INT [pk, increment]
+  MaTram NVARCHAR(MAX)
+  TenTram NVARCHAR(MAX)
+  ViTri NVARCHAR(MAX)
+  GhiChu NVARCHAR(MAX)
+}
+
+Table CongToDien {
+  Id INT [pk, increment]
+  SoSerial NVARCHAR(MAX)
+  MaCongTo NVARCHAR(MAX)
+  KhachHangId INT [not null]
+  TramDienId INT
+  BangGiaId INT
+  TrangThai BIT [not null]
+}
+
+Table ChiSoDien {
+  Id INT [pk, increment]
+  CongToDienId INT [not null]
+  NgayGhi DATETIME [not null]
+  ChiSoCu INT [not null]
+  ChiSoMoi INT [not null]
+  ThangNam DATETIME [not null]
+}
+
+Ref: KhachHang.Id < HoaDon.KhachHangId
+Ref: KhachHang.Id < CongToDien.KhachHangId
+Ref: CongToDien.Id < ChiSoDien.CongToDienId
+Ref: TramDien.Id < CongToDien.TramDienId
+Ref: BangGia.Id < CongToDien.BangGiaId
+Ref: NhanVien.Id < HoaDon.NhanVienId
